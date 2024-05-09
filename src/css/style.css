@@ -26,3 +26,18 @@
     font-family: Akzidenz, system-ui, sans-serif;
   }
 }
+
+@layer components {
+  #app {
+    @apply h-screen flex flex-col items-center justify-center dark:text-white dark:bg-slate-800
+  }
+  .logo {
+    @apply text-2xl sm:text-4xl md:text-6xl font-bold uppercase
+  }
+  .button-primary {
+    @apply bg-slate-200 rounded-md px-4 py-2 font-medium uppercase hover:bg-slate-300 mt-2 sm:mt-5 dark:bg-indigo-500 hover:dark:bg-indigo-600
+  }
+  .theme-switcher-wrapper {
+    @apply absolute top-6 right-6
+  }
+}
