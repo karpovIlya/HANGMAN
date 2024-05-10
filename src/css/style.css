@@ -68,7 +68,7 @@
       mt-2
       sm:mt-5
       dark:bg-indigo-500
-      hover:dark:bg-indigo-600
+      dark:bg-indigo-600
   }
 
   .theme-switcher-wrapper {
@@ -139,12 +139,14 @@
       justify-center
       items-center
       bg-slate-200 
-      hover:bg-slate-300 
+      enabled:hover:bg-slate-300 
       dark:bg-indigo-500
-      hover:dark:bg-indigo-600
+      enabled:dark:bg-indigo-600
       font-medium
       uppercase
       rounded-md
       text-center
+      disabled:opacity-20
+      disabled:cursor-not-allowed
   }
 }

@@ -7,6 +7,8 @@ import {
 const gameDiv = document.getElementById("game");
 const logo = document.getElementById("logo");
 
+let triesLeft = 10;
+
 const createPlaceholdersHTML = () => {
   const selectedWord = sessionStorage.getItem(
     SELECTED_WORD_KEY_IN_SESSION_STORE
@@ -31,17 +33,43 @@ const createKeyboard = () => {
 };
 
 const createTriesCounter = () => {
-  return '<p class="tries" id="tries">Tries left: <span id="tries-left" class="tries-left">10</span></p>';
+  return `<p class="tries" id="tries">Tries left: <span id="tries-left" class="tries-left">${triesLeft}</span></p>`;
 };
 
 const createHangmanImg = () => {
   const image = document.createElement("img");
 
-  image.src = "/images/hg-4.png";
+  image.src = "/images/hg-0.png";
   image.alt = "Hangman image";
+  image.id = "hangman";
   image.classList.add("hangman");
 
   return image;
+};
+
+const checkLetter = (letter) => {
+  const selectedWord = sessionStorage
+    .getItem(SELECTED_WORD_KEY_IN_SESSION_STORE)
+    .toLowerCase();
+  const inputLetter = letter.toLowerCase();
+  const triesLeftSpan = document.getElementById("tries-left");
+  const hangmanImg = document.getElementById("hangman");
+  const selectedWordArray = selectedWord.split("");
+
+  if (!selectedWord.includes(inputLetter)) {
+    triesLeft--;
+    triesLeftSpan.textContent = triesLeft;
+    hangmanImg.src = `/images/hg-${10 - triesLeft}.png`;
+  } else {
+    selectedWordArray.forEach((currentLetter, index) => {
+      if (currentLetter === inputLetter) {
+        const expandablePlaceholder = document.getElementById(
+          `placeholder_${index}`
+        );
+        expandablePlaceholder.textContent = currentLetter.toUpperCase();
+      }
+    });
+  }
 };
 
 export const startGame = () => {
@@ -60,6 +88,11 @@ export const startGame = () => {
   gameDiv.appendChild(keyboard);
 
   keyboard.addEventListener("click", (event) => {
-    console.log(event.target.id);
+    const targetId = event.target.id;
+
+    if (LETTERS.includes(targetId)) {
+      event.target.disabled = true;
+      checkLetter(targetId);
+    }
   });
 };
