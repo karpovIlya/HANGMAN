@@ -1,4 +1,10 @@
-import '/src/css/style.css'
-import { swicthThemeHandler } from './utilities'
+import "/src/css/style.css";
+import { swicthThemeHandler } from "./utilities";
+import { startGame } from "./game";
 
-swicthThemeHandler()
+swicthThemeHandler();
+
+const startGameBtn = document.querySelector(".button-primary");
+startGameBtn.addEventListener("click", () => {
+  startGame();
+});

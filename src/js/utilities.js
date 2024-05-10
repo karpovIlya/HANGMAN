@@ -1,21 +1,21 @@
-export const swicthThemeHandler = () => {
-  const themeSwicther = document.getElementById('theme-swicther')
-  const htmlElement = document.documentElement
-  const darkThemeClass = 'dark'
-  const themeKeyInStorage = 'theme'
+import { DARK_THEME_CLASS, THEME_KEY_IN_LOCACL_STORE } from "./constants";
 
-  if (localStorage.getItem(themeKeyInStorage)) {
-    htmlElement.classList.add(darkThemeClass)
-    themeSwicther.checked = true
+export const swicthThemeHandler = () => {
+  const themeSwicther = document.getElementById("theme-swicther");
+  const htmlElement = document.documentElement;
+
+  if (localStorage.getItem(THEME_KEY_IN_LOCACL_STORE)) {
+    htmlElement.classList.add(DARK_THEME_CLASS);
+    themeSwicther.checked = true;
   }
 
-  themeSwicther.addEventListener('input', () => {
-    htmlElement.classList.toggle(darkThemeClass)
+  themeSwicther.addEventListener("input", () => {
+    htmlElement.classList.toggle(DARK_THEME_CLASS);
 
-    if (htmlElement.classList.contains(darkThemeClass)) {
-      localStorage.setItem(themeKeyInStorage, darkThemeClass)
+    if (htmlElement.classList.contains(DARK_THEME_CLASS)) {
+      localStorage.setItem(THEME_KEY_IN_LOCACL_STORE, DARK_THEME_CLASS);
     } else {
-      localStorage.setItem(themeKeyInStorage, '')
+      localStorage.setItem(THEME_KEY_IN_LOCACL_STORE, "");
     }
-  })
-}
+  });
+};

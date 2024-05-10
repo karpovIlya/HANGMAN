@@ -9,12 +9,14 @@
     font-weight: 700;
     font-style: normal;
   }
+
   @font-face {
     font-family: Akzidenz;
     src: url(/fonts/AkzidenzGroteskPro-Md.otf) format('opentype');
     font-weight: 500;
     font-style: normal;
   }
+
   @font-face {
     font-family: Akzidenz;
     src: url(/fonts/AkzidenzGroteskPro-Regular.otf) format('opentype');
@@ -29,15 +31,120 @@
 
 @layer components {
   #app {
-    @apply h-screen flex flex-col items-center justify-center dark:text-white dark:bg-slate-800
+    @apply
+      py-10
+      min-h-screen
+      flex
+      flex-col
+      items-center
+      justify-center
+      dark:text-white
+      dark:bg-slate-800
   }
+
   .logo {
-    @apply text-2xl sm:text-4xl md:text-6xl font-bold uppercase
+    @apply
+      text-2xl
+      sm:text-4xl
+      md:text-6xl
+      font-bold
+      uppercase
   }
+
+  .logo-small {
+    @apply
+      text-xl
+  }
+
   .button-primary {
-    @apply bg-slate-200 rounded-md px-4 py-2 font-medium uppercase hover:bg-slate-300 mt-2 sm:mt-5 dark:bg-indigo-500 hover:dark:bg-indigo-600
+    @apply
+      bg-slate-200
+      rounded-md
+      px-4
+      py-2
+      font-medium
+      uppercase
+      hover:bg-slate-300
+      mt-2
+      sm:mt-5
+      dark:bg-indigo-500
+      hover:dark:bg-indigo-600
   }
+
   .theme-switcher-wrapper {
-    @apply absolute top-6 right-6
+    @apply
+      absolute
+      top-6
+      right-6
+  }
+
+  .hangman {
+    @apply
+      block
+      my-0
+      mx-auto
+      w-60
+      h-60
+      sm:w-80
+      sm:h-80
+  }
+
+  .placeholder-wrapper {
+    @apply
+      flex
+      justify-center
+      mt-5
+  }
+
+  .placeholder {
+    @apply
+      text-2xl
+      sm:text-4xl
+      mr-2
+      last:mr-0
+      font-bold
+  }
+  
+  .tries {
+    @apply
+      mt-5
+      text-xl
+      font-medium
+      text-center
+  }
+
+  .tries-left {
+    @apply
+      text-red-500
+  }
+
+  .keyboard {
+    @apply
+      mt-5
+      max-w-3xl
+      flex
+      flex-wrap
+      justify-center
+  }
+
+  .letter {
+    @apply
+      m-1
+      sm:m-2
+      w-10
+      h-10
+      sm:w-16
+      sm:h-16
+      flex
+      justify-center
+      items-center
+      bg-slate-200 
+      hover:bg-slate-300 
+      dark:bg-indigo-500
+      hover:dark:bg-indigo-600
+      font-medium
+      uppercase
+      rounded-md
+      text-center
   }
 }
