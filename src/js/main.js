@@ -1,5 +1,5 @@
 import "/src/css/style.css";
-import { swicthThemeHandler } from "./utilities";
+import { swicthThemeHandler, getRandomWord } from "./utilities";
 import { startGame } from "./game";
 
 swicthThemeHandler();

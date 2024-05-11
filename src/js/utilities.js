@@ -1,4 +1,8 @@
-import { DARK_THEME_CLASS, THEME_KEY_IN_LOCACL_STORE } from "./constants";
+import {
+  DARK_THEME_CLASS,
+  THEME_KEY_IN_LOCACL_STORE,
+  API_URL,
+} from "./constants";
 
 export const swicthThemeHandler = () => {
   const themeSwicther = document.getElementById("theme-swicther");
@@ -18,4 +22,11 @@ export const swicthThemeHandler = () => {
       localStorage.setItem(THEME_KEY_IN_LOCACL_STORE, "");
     }
   });
+};
+
+export const getRandomWord = async () => {
+  const response = await fetch(API_URL);
+  const data = await response.json();
+
+  return data[0];
 };

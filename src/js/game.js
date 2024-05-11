@@ -1,8 +1,5 @@
-import {
-  WORDS,
-  LETTERS,
-  SELECTED_WORD_KEY_IN_SESSION_STORE,
-} from "./constants";
+import { LETTERS, SELECTED_WORD_KEY_IN_SESSION_STORE } from "./constants";
+import { getRandomWord } from "./utilities";
 
 const gameDiv = document.getElementById("game");
 const logo = document.getElementById("logo");
@@ -180,36 +177,40 @@ const checkLetter = (letter) => {
 };
 
 export const startGame = () => {
-  const randomIndex = Math.floor(Math.random() * WORDS.length);
-  const selectedWord = WORDS[randomIndex];
-  const keyboard = createKeyboard();
-  const hangmanImage = createHangmanImg();
-  const quitBtn = createQuitBtn();
+  getRandomWord()
+    .then((selectedWord) => {
+      const keyboard = createKeyboard();
+      const hangmanImage = createHangmanImg();
+      const quitBtn = createQuitBtn();
 
-  sessionStorage.setItem(SELECTED_WORD_KEY_IN_SESSION_STORE, selectedWord);
-  logo.classList.add("logo-small");
+      sessionStorage.setItem(SELECTED_WORD_KEY_IN_SESSION_STORE, selectedWord);
+      logo.classList.add("logo-small");
 
-  gameDiv.innerHTML = "";
-  gameDiv.appendChild(hangmanImage);
-  gameDiv.innerHTML += createPlaceholdersHTML();
-  gameDiv.innerHTML += createTriesCounter();
-  gameDiv.appendChild(keyboard);
-  gameDiv.appendChild(quitBtn);
+      gameDiv.innerHTML = "";
+      gameDiv.appendChild(hangmanImage);
+      gameDiv.innerHTML += createPlaceholdersHTML();
+      gameDiv.innerHTML += createTriesCounter();
+      gameDiv.appendChild(keyboard);
+      gameDiv.appendChild(quitBtn);
 
-  keyboard.addEventListener("click", (event) => {
-    const targetId = event.target.id;
+      keyboard.addEventListener("click", (event) => {
+        const targetId = event.target.id;
 
-    if (LETTERS.includes(targetId)) {
-      event.target.disabled = true;
-      checkLetter(targetId);
-    }
-  });
+        if (LETTERS.includes(targetId)) {
+          event.target.disabled = true;
+          checkLetter(targetId);
+        }
+      });
 
-  quitBtn.addEventListener("click", () => {
-    const isSure = confirm("Are you sure you want to quit?");
+      quitBtn.addEventListener("click", () => {
+        const isSure = confirm("Are you sure you want to quit?");
 
-    if (isSure) {
-      stopGame("quit");
-    }
-  });
+        if (isSure) {
+          stopGame("quit");
+        }
+      });
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
