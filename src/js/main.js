@@ -1,4 +1,4 @@
-import "/src/css/style.css";
+import "../css/style.css";
 import { swicthThemeHandler, getRandomWord } from "./utilities";
 import { startGame } from "./game";
 

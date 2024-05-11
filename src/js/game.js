@@ -38,7 +38,7 @@ const createTriesCounter = () => {
 const createHangmanImg = () => {
   const image = document.createElement("img");
 
-  image.src = "/images/hg-0.png";
+  image.src = "./images/hg-0.png";
   image.alt = "Hangman image";
   image.id = "hangman";
   image.classList.add("hangman");
@@ -78,7 +78,7 @@ const createSelectedWordHtml = () => {
 
 const changeForWinImg = (status) => {
   if (status === "win") {
-    document.getElementById("hangman").src = "/images/hg-win.png";
+    document.getElementById("hangman").src = "./images/hg-win.png";
   }
 };
 
@@ -158,7 +158,7 @@ const checkLetter = (letter) => {
     }
 
     triesLeftSpan.textContent = triesLeft;
-    hangmanImg.src = `/images/hg-${10 - triesLeft}.png`;
+    hangmanImg.src = `./images/hg-${10 - triesLeft}.png`;
   } else {
     selectedWordArray.forEach((currentLetter, index) => {
       if (currentLetter === inputLetter) {
