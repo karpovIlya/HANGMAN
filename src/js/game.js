@@ -8,6 +8,7 @@ const gameDiv = document.getElementById("game");
 const logo = document.getElementById("logo");
 
 let triesLeft = 10;
+let guessedLetters = 0;
 
 const createPlaceholdersHTML = () => {
   const selectedWord = sessionStorage.getItem(
@@ -17,7 +18,7 @@ const createPlaceholdersHTML = () => {
     return (acc += `<div class="placeholder" id="placeholder_${index}">_</div>`);
   }, "");
 
-  return `<div class="placeholder-wrapper">${placeholders}</div>`;
+  return `<div class="placeholder-wrapper" id="placeholders">${placeholders}</div>`;
 };
 
 const createKeyboard = () => {
@@ -27,6 +28,7 @@ const createKeyboard = () => {
   }, "");
 
   keyboard.classList.add("keyboard");
+  keyboard.id = "keyboard";
   keyboard.innerHTML = letters;
 
   return keyboard;
@@ -47,6 +49,101 @@ const createHangmanImg = () => {
   return image;
 };
 
+const createResultText = (status) => {
+  const resultText = document.createElement("p");
+  resultText.classList.add("result-text");
+
+  switch (status) {
+    case "win":
+      resultText.classList.add("win-text");
+      resultText.textContent = "Congratulations, you won =)";
+      break;
+    case "lose":
+      resultText.classList.add("lose-text");
+      resultText.textContent = "Sorry, you lost =(";
+      break;
+  }
+
+  return resultText;
+};
+
+const createSelectedWordHtml = () => {
+  const selectedWord = sessionStorage.getItem(
+    SELECTED_WORD_KEY_IN_SESSION_STORE
+  );
+  const selectedWordHtml = document.createElement("p");
+
+  selectedWordHtml.classList.add("selected-word");
+  selectedWordHtml.innerHTML = `The word was: <span class="selected-word-bold">${selectedWord}</span>`;
+
+  return selectedWordHtml;
+};
+
+const changeForWinImg = (status) => {
+  if (status === "win") {
+    document.getElementById("hangman").src = "/images/hg-win.png";
+  }
+};
+
+const createQuitBtn = () => {
+  const quitBtn = document.createElement("button");
+
+  quitBtn.classList.add("button-secondary");
+  quitBtn.textContent = "quit";
+  quitBtn.id = "quit";
+
+  return quitBtn;
+};
+
+const createRetryBtn = () => {
+  const retryBtn = document.createElement("button");
+
+  retryBtn.classList.add("button-primary");
+  retryBtn.textContent = "retry";
+  retryBtn.id = "retry";
+
+  return retryBtn;
+};
+
+const stopGame = (status) => {
+  const retryBtn = createRetryBtn();
+
+  document.getElementById("placeholders").remove();
+  document.getElementById("tries").remove();
+  document.getElementById("keyboard").remove();
+  document.getElementById("quit").remove();
+
+  logo.classList.remove("logo-small");
+  changeForWinImg(status);
+
+  if (status !== "quit") {
+    gameDiv.appendChild(createResultText(status));
+  } else {
+    document.getElementById("hangman").remove();
+  }
+
+  gameDiv.appendChild(createSelectedWordHtml());
+  gameDiv.appendChild(retryBtn);
+
+  retryBtn.addEventListener("click", () => {
+    gameDiv.innerHTML = "";
+
+    const startGameBtn = document.createElement("button");
+
+    startGameBtn.classList.add("button-primary");
+    startGameBtn.textContent = "START GAME";
+
+    gameDiv.appendChild(startGameBtn);
+
+    startGameBtn.addEventListener("click", () => {
+      startGame();
+    });
+
+    triesLeft = 10;
+    guessedLetters = 0;
+  });
+};
+
 const checkLetter = (letter) => {
   const selectedWord = sessionStorage
     .getItem(SELECTED_WORD_KEY_IN_SESSION_STORE)
@@ -58,6 +155,11 @@ const checkLetter = (letter) => {
 
   if (!selectedWord.includes(inputLetter)) {
     triesLeft--;
+
+    if (triesLeft === 0) {
+      stopGame("lose");
+    }
+
     triesLeftSpan.textContent = triesLeft;
     hangmanImg.src = `/images/hg-${10 - triesLeft}.png`;
   } else {
@@ -67,6 +169,11 @@ const checkLetter = (letter) => {
           `placeholder_${index}`
         );
         expandablePlaceholder.textContent = currentLetter.toUpperCase();
+
+        guessedLetters++;
+        if (guessedLetters === selectedWord.length) {
+          stopGame("win");
+        }
       }
     });
   }
@@ -77,6 +184,7 @@ export const startGame = () => {
   const selectedWord = WORDS[randomIndex];
   const keyboard = createKeyboard();
   const hangmanImage = createHangmanImg();
+  const quitBtn = createQuitBtn();
 
   sessionStorage.setItem(SELECTED_WORD_KEY_IN_SESSION_STORE, selectedWord);
   logo.classList.add("logo-small");
@@ -86,6 +194,7 @@ export const startGame = () => {
   gameDiv.innerHTML += createPlaceholdersHTML();
   gameDiv.innerHTML += createTriesCounter();
   gameDiv.appendChild(keyboard);
+  gameDiv.appendChild(quitBtn);
 
   keyboard.addEventListener("click", (event) => {
     const targetId = event.target.id;
@@ -93,6 +202,14 @@ export const startGame = () => {
     if (LETTERS.includes(targetId)) {
       event.target.disabled = true;
       checkLetter(targetId);
+    }
+  });
+
+  quitBtn.addEventListener("click", () => {
+    const isSure = confirm("Are you sure you want to quit?");
+
+    if (isSure) {
+      stopGame("quit");
     }
   });
 };

@@ -58,6 +58,7 @@
 
   .button-primary {
     @apply
+      block
       bg-slate-200
       rounded-md
       px-4
@@ -67,8 +68,59 @@
       hover:bg-slate-300
       mt-2
       sm:mt-5
+      mx-auto
       dark:bg-indigo-500
-      dark:bg-indigo-600
+      dark:hover:bg-indigo-600
+  }
+
+  .button-secondary {
+    @apply
+      block
+      rounded-md
+      px-4
+      py-2
+      mt-2
+      sm:mt-5
+      mx-auto
+      font-medium
+      uppercase
+      border-2
+      border-slate-200
+      hover:bg-slate-200
+      dark:border-indigo-500
+      dark:hover:bg-indigo-500
+  }
+
+  .result-text {
+    @apply
+      uppercase
+      mt-5
+      text-2xl
+      text-center
+      font-medium
+  }
+  
+  .win-text {
+    @apply
+      text-lime-500
+  }
+
+  .lose-text {
+    @apply
+      text-red-500
+  }
+
+  .selected-word {
+    @apply
+      mt-5
+      text-lg
+      text-center
+      font-normal
+  }
+
+  .selected-word-bold {
+    @apply
+      font-bold
   }
 
   .theme-switcher-wrapper {
@@ -85,8 +137,8 @@
       mx-auto
       w-60
       h-60
-      sm:w-80
-      sm:h-80
+      sm:w-64
+      sm:h-64
   }
 
   .placeholder-wrapper {
@@ -141,7 +193,7 @@
       bg-slate-200 
       enabled:hover:bg-slate-300 
       dark:bg-indigo-500
-      enabled:dark:bg-indigo-600
+      enabled:dark:hover:bg-indigo-600
       font-medium
       uppercase
       rounded-md
